@@ -4,6 +4,7 @@ import plural from 'pluralize-es'
 import { verificarExistenciaArchivo, crearArchivo } from '../utils/index.js'
 import { crearMigracion } from './create_migration.js'
 import { crearSchema } from './create_schema.js'
+import { crearRouter } from './create_router.js'
 
 program.command('create:model')
 .description('crea un modelo de javascript según el nombre dado')
@@ -101,7 +102,12 @@ export { ${nombreModeloMayusculas}_TABLE, ${nombreModeloPrimeraMayuscula}Schema,
   }
 
   if (options.router){
-    console.log('Crear router')
+    try {
+      await crearRouter(nombreModelo, true)
+    } catch (error) {
+      console.error('Error: ', error)
+      return
+    }
   }
 
   if (options.service){
