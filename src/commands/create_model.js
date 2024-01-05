@@ -5,6 +5,7 @@ import { verificarExistenciaArchivo, crearArchivo } from '../utils/index.js'
 import { crearMigracion } from './create_migration.js'
 import { crearSchema } from './create_schema.js'
 import { crearRouter } from './create_router.js'
+import { crearService } from './create_service.js'
 
 program.command('create:model')
 .description('crea un modelo de javascript según el nombre dado')
@@ -111,11 +112,24 @@ export { ${nombreModeloMayusculas}_TABLE, ${nombreModeloPrimeraMayuscula}Schema,
   }
 
   if (options.service){
-    console.log('Crear servicio')
+    try {
+      await crearService(nombreModelo)
+    } catch (error) {
+      console.error('Error: ', error)
+      return
+    }
   }
 
   if (options.all){
-    console.log('Crear todos los recursos')
+    try {
+      await crearMigracion(nombreModelo)
+      await crearSchema(nombreModelo)
+      await crearRouter(nombreModelo, true)
+      await crearService(nombreModelo)
+    } catch (error) {
+      console.error('Error: ', error)
+      return
+    }
   }
 })
 
