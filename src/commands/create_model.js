@@ -3,6 +3,7 @@ import path from 'path'
 import plural from 'pluralize-es'
 import { verificarExistenciaArchivo, crearArchivo } from '../utils/index.js'
 import { crearMigracion } from './create_migration.js'
+import { crearSchema } from './create_schema.js'
 
 program.command('create:model')
 .description('crea un modelo de javascript según el nombre dado')
@@ -91,11 +92,12 @@ export { ${nombreModeloMayusculas}_TABLE, ${nombreModeloPrimeraMayuscula}Schema,
   }
 
   if (options.schema){
-    console.log('Crear schema')
-  }
-
-  if (options.router){
-    console.log('Crear router')
+    try {
+      await crearSchema(nombreModelo)
+    } catch (error) {
+      console.error('Error: ', error)
+      return
+    }
   }
 
   if (options.router){
