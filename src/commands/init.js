@@ -459,7 +459,7 @@ app.listen(port, () => {
   console.log('Aplicación ejecutandose en el puerto', port)
 })`
 
-  const rutaIndex = path.join(project_name, 'src', 'index.js')
+  const rutaIndex = path.join(project_name, 'src')
   try {
     await fs.writeFile(rutaIndex, index)
     return true
