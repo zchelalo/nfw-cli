@@ -376,11 +376,11 @@ async function crearPackageJson(project_name){
   "name": "${project_name}",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js",
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
     "lint": "eslint"
   },
   "keywords": [],
@@ -422,12 +422,12 @@ async function crearIndex(project_name){
 `import express from 'express'
 import cors from 'cors'
 
-import { config } from "./src/config/config.js"
-import { routerApi } from './src/routes/index.js'
-import { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } from './src/middlewares/error.handler.js'
+import { config } from "./config/config.js"
+import { routerApi } from './routes/index.js'
+import { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } from './middlewares/error.handler.js'
 
 import passport from 'passport'
-import './src/utils/auth/index.js'
+import './utils/auth/index.js'
 
 const app = express()
 const port = config.PORT
@@ -459,7 +459,7 @@ app.listen(port, () => {
   console.log('Aplicación ejecutandose en el puerto', port)
 })`
 
-  const rutaIndex = path.join(project_name, 'index.js')
+  const rutaIndex = path.join(project_name, 'src', 'index.js')
   try {
     await fs.writeFile(rutaIndex, index)
     return true
