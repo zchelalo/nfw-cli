@@ -41,7 +41,6 @@ program.command('init').description('crea la estructura inicial de un proyecto c
     await crearDockerCompose(project_name, db_name)
     await crearDockerignore(project_name)
     await crearPackageJson(project_name)
-    await crearIndex(project_name)
     await crearReadme(project_name)
     await crearGitignore(project_name)
     await crearEnvExample(project_name)
@@ -56,6 +55,7 @@ program.command('init').description('crea la estructura inicial de un proyecto c
   const src = path.join(project_name, 'src')
   try {
     await crearCarpeta(src)
+    await crearIndex(src)
   } catch (error) {
     console.error(error)
     return
@@ -417,7 +417,7 @@ async function crearPackageJson(project_name){
   }
 }
 
-async function crearIndex(project_name){
+async function crearIndex(ruta){
   const index =
 `import express from 'express'
 import cors from 'cors'
@@ -459,7 +459,7 @@ app.listen(port, () => {
   console.log('Aplicación ejecutandose en el puerto', port)
 })`
 
-  const rutaIndex = path.join(project_name, 'src')
+  const rutaIndex = path.join(ruta, 'index.js')
   try {
     await fs.writeFile(rutaIndex, index)
     return true
